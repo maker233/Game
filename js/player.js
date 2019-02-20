@@ -14,6 +14,10 @@ function Player(game) {
 
     this.bullets = [];
 
+    // SPRITES número de imágenes diferentes
+    // this.img.frames = 3;
+    // this.img.frameIndex = 0;
+
     //this.setListeners();
 
 }
@@ -24,7 +28,20 @@ Player.prototype.draw = function() {
     this.game.ctx.fillStyle = "black";
     this.game.ctx.fillRect(this.x, this.y, this.w, this.h);
 
-    // Eliminamos bullets fuera del canvas
+    // SPRITES
+    // this.game.ctx.drawImage(
+    //     this.img,
+    //     this.img.frameIndex * Math.floor(this.img.width / this.img.frames),
+    //     0,
+    //     Math.floor(this.img.width / this.img.frames),
+    //     this.img.height,
+    //     this.x,
+    //     this.y,
+    //     this.w,
+    //     this.h
+    // );
+
+    //Eliminamos bullets fuera del canvas, no funciona
     // this.bullets.filter(function(bullet) {
     //     return bullet.x > this.game.canvas.w;
 
@@ -35,6 +52,18 @@ Player.prototype.draw = function() {
         bullet.draw();
         bullet.move();
     });
+
+    this.game.ctx.drawImage(
+        this.img,
+        this.img.frameIndex * Math.floor(this.img.width / this.img.frames),
+        0,
+        Math.floor(this.img.width / this.img.frames),
+        this.img.height,
+        this.x,
+        this.y,
+        this.w,
+        this.h
+    );
 
 
 };
@@ -51,8 +80,16 @@ Player.prototype.move = function() {
                 this._moveDown()
                 break;
             case 32: //space
-                console.log("Has pulsado space")
+                //console.log("Has pulsado space")
                 this.shoot()
+                break;
+            case 37:
+                //console.log("Has pulsado izquierda")
+                //this._moveLeft()
+                break;
+            case 39:
+                //console.log("Has pulsado derecha")
+                //this._moveRight()
                 break;
         }
     }.bind(this)
@@ -60,7 +97,7 @@ Player.prototype.move = function() {
 
 Player.prototype._moveUp = function() {
     //Bloqueo movimiento superior
-    if (this.y < 400) {
+    if (this.y < 490) {
         this.y = this.y
     } else {
         this.y -= 15
@@ -70,10 +107,30 @@ Player.prototype._moveUp = function() {
 
 Player.prototype._moveDown = function() {
     //Bloqueo movimiento inferior
-    if (this.y < 600) {
+    if (this.y < 650) {
         this.y += 15
     } else {
         this.y = this.y
+    }
+
+}
+
+Player.prototype._moveRight = function() {
+    //Bloqueo movimiento superior
+    if (this.x > 1000) {
+        this.x = this.x
+    } else {
+        this.x += 15
+    }
+
+}
+
+Player.prototype._moveLeft = function() {
+    //Bloqueo movimiento superior
+    if (this.x < 200) {
+        this.x = this.y
+    } else {
+        this.x -= 15
     }
 
 }

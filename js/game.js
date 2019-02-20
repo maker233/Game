@@ -10,26 +10,21 @@ function Game() {
     this.interval = undefined
     this.player = undefined
 
-    this.keys = {
-        TOP_KEY: 38,
-        DOWN_KEY: 40,
-        SPACE: 32
-    }
-
 }
 
 Game.prototype.init = function(id) {
-    this.canvas = document.getElementById(id)
-    this.ctx = this.canvas.getContext('2d');
+        this.canvas = document.getElementById(id)
+        this.ctx = this.canvas.getContext('2d');
 
-    //Igualamos tamaño canvas a window
-    this.canvas.width = this.w;
-    this.canvas.height = this.h;
+        //Igualamos tamaño canvas a window
+        this.canvas.width = this.w;
+        this.canvas.height = this.h;
 
-    this.refresh();
+        this.refresh();
 
-}
-
+    }
+    // REFRESH
+    // REFRESH
 Game.prototype.refresh = function() {
 
     this.reset();
@@ -43,48 +38,57 @@ Game.prototype.refresh = function() {
             this.framesCounter = 0;
         }
 
-        // controlamos la velocidad de generación de obstáculos
-        if (this.framesCounter % 120 === 0) {
+        //generación de obstáculos
+        if (this.framesCounter < 500 && this.framesCounter % 200 === 0) {
+            this.generateZombie()
+        } else if (
+            this.framesCounter > 500 && this.framesCounter % 70 === 0) {
             this.generateZombie()
         }
 
-        if (this.framesCounter % 200 === 0) {
+        if (this.framesCounter % 300 === 0) {
             this.generateObstacle()
         }
 
+        //Metodos a ejecutar por ciclo
         this.drawAll()
         this.moveAll()
+        this.checkAllCollisions()
 
-        this.score += 0.01;
-
-
-        if (this.isCollisionAll(this.player, this.obstacle)) {
-            alert("Te has chocado")
-            this.gameOver()
-        }
-
-        // REFACTORIZANDO
-        // REFACTORIZANDO
-
-        // if (this.isCollisionPvO()) {
-        //     alert("Te has chocado")
-        //     this.gameOver()
-        // }
-        if (this.isCollisionZvP()) {
-            //animación te comen
-            alert("Te han comido")
-            this.gameOver()
-
-        }
-        if (this.isCollisionZvO()) {
-            //animación explotan
-            this.deleteZombie()
-            console.log("Hasta luego zombi!")
-        }
+        this.score += 0.05;
 
     }.bind(this), 1000 / this.fps)
 }
 
+
+
+
+Game.prototype.checkAllCollisions = function() {
+    if (this.isCollisionPvO()) {
+        //alert("Te has chocado")
+        console.log("Te has chocado")
+        this.gameOver()
+    }
+    if (this.isCollisionZvP()) {
+        //animación te comen
+        //alert("Te han comido")
+        console.log("Te han comido")
+        this.gameOver()
+    }
+
+    if (this.isCollisionAll(this.zombies, this.obstacles) === true) {
+        //animación te comen
+        console.log("Zombie chocado")
+        this.deleteZombie()
+    }
+
+    if (this.isCollisionAll(this.zombies, this.bullets) === true) {
+        //animación explotan
+        console.log("Zombie disparado")
+        this.deleteZombie()
+    }
+
+}
 Game.prototype.drawAll = function() {
 
     this.background.draw()
@@ -100,6 +104,11 @@ Game.prototype.drawAll = function() {
 
 }
 
+Game.prototype.drawScore = function() {
+    this.scoreBoard.draw(this.ctx)
+    this.scoreBoard.update(this.score, this.ctx)
+}
+
 Game.prototype.moveAll = function() {
 
     this.background.move()
@@ -111,6 +120,7 @@ Game.prototype.moveAll = function() {
         elm.move()
     })
 }
+
 Game.prototype.clean = function() {
     this.ctx.clearRect(0, 0, this.w, this.h);
 }
@@ -118,25 +128,26 @@ Game.prototype.clean = function() {
 Game.prototype.reset = function() {
     this.background = new Background(this);
     this.player = new Player(this);
+    //this.bullets = new Bullets(this)
 
-    this.scoreBoard = ScoreBoard
+    this.scoreBoard = ScoreBoard;
+    this.scoreBoard.init();
+
     this.framesCounter = 0
+    this.score = 0
 
     this.zombies = []
     this.obstacles = []
+    this.bullets = []
 
 }
 
 Game.prototype.gameOver = function() {
-    alert("GAME OVER, Try again")
+    console.log("GAME OVER, Try again")
     this.reset();
 }
 
-Game.prototype.drawScore = function() {
-    this.scoreBoard.update(this.score, this.ctx)
-}
 
-// GENERADORES DE ELEMENTOS
 // GENERADORES DE ELEMENTOS
 
 Game.prototype.generateObstacle = function() {
@@ -148,9 +159,8 @@ Game.prototype.generateZombie = function() {
     this.zombies.push(new Zombie(this));
 }
 
-Game.prototype.deleteZombie = function() {
-    //console.log(this.zombies)
-    this.zombies.pop();
+Game.prototype.deleteZombie = function(index) {
+    this.zombies.splice(index, 1)
 }
 
 
@@ -160,53 +170,35 @@ Game.prototype.deleteZombie = function() {
 // COLISIONES - HERE'RE BE DRAGONS
 
 Game.prototype.isCollisionPvO = function() {
-
+    //Player vs Obstacles
     return this.obstacles.some(function(obstacle) {
-        return (
-            ((this.player.x + this.player.w) >= obstacle.x &&
-                this.player.x < (obstacle.x + obstacle.w) &&
-                this.player.y + (this.player.h) >= obstacle.y) &&
-            (obstacle.y + obstacle.h) > this.player.y);
+        return this._collision(obstacle, this.player)
     }.bind(this));
 }
 
 Game.prototype.isCollisionZvP = function() {
-
+    //Zombies vs Player
     return this.zombies.some(function(zombie) {
-        return (
-            ((zombie.x + zombie.w) >= this.player.x &&
-                zombie.x < (this.player.x + this.player.w) &&
-                zombie.y + (zombie.h) >= this.player.y) &&
-            (this.player.y + this.player.h) > zombie.y);
+        return this._collision(zombie, this.player)
     }.bind(this));
 }
 
-Game.prototype.isCollisionZvO = function() {
-
-    zombies.forEach(function(i) {
-
-        this.obstacles.some(function(obstacle) {
-            return this.collision(this.zombies, this.obstacles)
-
-        }.bind(this));
-    })
-}
-
-//REFACTORIZACIÓN DE COLISIONES
 //REFACTORIZACIÓN DE COLISIONES
 
 Game.prototype.isCollisionAll = function(fo, so) {
-
+    var collision = false;
     fo.forEach(function(p) {
 
-        this.so.forEach(function(o) {
+        so.forEach(function(o) {
 
-            this._collision(p, o)
-        })
-    })
+            if (this._collision(p, o)) collision = true;
+        }.bind(this))
+    }.bind(this))
+    return collision
+        //console.log(collision ? 'SI HAY COLISION' : 'NO HAY COLISION')
 }
 
-
+//REFACTORIZACIÓN DE COLISIONES
 
 Game.prototype._collision = function(p, o) {
     return ((p.x + p.w) > o.x &&
@@ -214,3 +206,26 @@ Game.prototype._collision = function(p, o) {
         (p.y + p.h) > o.y &&
         (o.y + o.h) > p.y)
 }
+
+Game.prototype.indexCollision = function() {
+        var contadorColisiones = 0;
+        for (var i = 0; i < this.zombies.length;) {
+            if (this.isCollisionAll()) {
+                contadorColisiones++
+            }
+        }
+        if (contadorColisiones > 0) {} //llamar sonido!
+    }
+    /*
+    {
+        "levels": {
+            "background": "url/tal.png", 
+            "enemies": {
+                image: "tal", 
+                health: 200, 
+                
+            }, 
+            "obstacles": ".."
+        }
+    }
+    */
