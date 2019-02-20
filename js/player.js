@@ -39,8 +39,8 @@ Player.prototype.draw = function() {
     // SPRITES
 
     //Eliminamos bullets fuera del canvas, no funciona
-    this.bullets.filter(function(bullet) {
-        return bullet.x > this.game.canvas.w;
+    this.bullets = this.bullets.filter(function(bullet) {
+        return bullet.x > 0;
     }.bind(this));
 
     this.game.ctx.drawImage(
@@ -142,3 +142,8 @@ Player.prototype.animateImg = function() {
         if (this.img.frameIndex > 2) this.img.frameIndex = 0;
     }
 };
+
+Player.prototype.deleteBullet = function(i) {
+    console.log('borrando bala')
+    this.bullets.splice(i, 1)
+}

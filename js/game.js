@@ -46,7 +46,10 @@ Game.prototype.refresh = function() {
             this.framesCounter > 500 && this.framesCounter % 65 === 0) {
             this.generateZombie()
         } else if (
-            this.framesCounter > 2000 && this.framesCounter % 15 === 0) {
+            this.framesCounter > 1000 && this.framesCounter % 15 === 0) {
+            this.generateZombie()
+        } else if (
+            this.framesCounter > 2000 && this.framesCounter % 5 === 0) {
             this.generateZombie()
         }
 
@@ -81,17 +84,26 @@ Game.prototype.checkAllCollisions = function() {
         this.gameOver()
     }
 
+
     if (this.isCollisionAll(this.zombies, this.obstacles) === true) {
         //animación te comen
         console.log("Zombie chocado")
         this.deleteZombie()
     }
 
-    if (this.isCollisionAll(this.zombies, this.player.bullets) === true) {
+    var collisionBvsZ = this.isCollisionAll(this.zombies, this.player.bullets);
+
+    if (collisionBvsZ) {
         //animación explotan
         console.log("Zombie disparado")
-        this.deleteZombie()
+        this.deleteZombie(collisionBvsZ[0]);
+        this.player.deleteBullet(collisionBvsZ[1])
     }
+
+    var collisionBvsO = this.isCollisionAll(this.player.bullets, this.obstacles)
+
+    if (collisionBvsO) { this.player.deleteBullet(collisionBvsZ[0]) }
+
 
 }
 Game.prototype.drawAll = function() {
@@ -169,7 +181,8 @@ Game.prototype.generateZombie = function() {
 }
 
 Game.prototype.deleteZombie = function(index) {
-    this.zombies.splice(index, 1)
+    this.zombies.splice(index, 1);
+
 }
 
 
@@ -196,11 +209,11 @@ Game.prototype.isCollisionZvP = function() {
 
 Game.prototype.isCollisionAll = function(fo, so) {
     var collision = false;
-    fo.forEach(function(p) {
+    fo.forEach(function(p, index1) {
 
-        so.forEach(function(o) {
+        so.forEach(function(o, index2) {
 
-            if (this._collision(p, o)) collision = true;
+            if (this._collision(p, o)) collision = [index1, index2];
         }.bind(this))
     }.bind(this))
     return collision
@@ -217,24 +230,28 @@ Game.prototype._collision = function(p, o) {
 }
 
 Game.prototype.indexCollision = function() {
-        var contadorColisiones = 0;
-        for (var i = 0; i < this.zombies.length;) {
-            if (this.isCollisionAll()) {
-                contadorColisiones++
-            }
-        }
-        if (contadorColisiones > 0) {} //llamar sonido!
-    }
-    /*
-    {
-        "levels": {
-            "background": "url/tal.png", 
-            "enemies": {
-                image: "tal", 
-                health: 200, 
-                
-            }, 
-            "obstacles": ".."
+    var contadorColisiones = 0;
+    for (var i = 0; i < this.zombies.length;) {
+        if (this.isCollisionAll()) {
+            contadorColisiones++
         }
     }
-    */
+    if (contadorColisiones > 0) {} //llamar sonido!
+}
+
+
+
+
+/*
+{
+    "levels": {
+        "background": "url/tal.png", 
+        "enemies": {
+            image: "tal", 
+            health: 200, 
+            
+        }, 
+        "obstacles": ".."
+    }
+}
+*/

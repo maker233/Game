@@ -8,7 +8,10 @@ function Zombie(game) {
     this.h = 70;
 
     this.img = new Image();
+    this.img2 = new Image();
     this.img.src = 'images/sprites/zombieboy.png';
+    this.img2.src = 'images/sprites/zombieboy.png';
+    // img2 sprite muerte zombie
 
     // número de imágenes diferentes
     this.img.frames = 10;
@@ -56,3 +59,18 @@ Zombie.prototype.animateImg = function() {
         if (this.img.frameIndex > 9) this.img.frameIndex = 0;
     }
 };
+
+Zombie.prototype.killAnimation = function() {
+    this.game.ctx.drawImage(
+        this.img2,
+        this.img.frameIndex * Math.floor(this.img.width / this.img.frames),
+        0,
+        Math.floor(this.img.width / this.img.frames),
+        this.img.height,
+        this.x,
+        this.y,
+        this.w,
+        this.h
+    );
+
+}

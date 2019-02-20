@@ -66,7 +66,7 @@ Background.prototype._layer02 = function() {
     this.game.ctx.drawImage(this.img2, this.x2, this.y, this.game.canvas.width, this.game.canvas.height);
 
     //Segundo bg
-    this.game.ctx.drawImage(this.img1, this.x2 + this.game.canvas.width, this.y, this.game.canvas.width, this.game.canvas.height);
+    this.game.ctx.drawImage(this.img2, this.x2 + this.game.canvas.width, this.y, this.game.canvas.width, this.game.canvas.height);
 
 };
 Background.prototype._layer03 = function() {
@@ -74,7 +74,7 @@ Background.prototype._layer03 = function() {
     this.game.ctx.drawImage(this.img3, this.x3, this.y, this.game.canvas.width, this.game.canvas.height);
 
     //Segundo bg
-    this.game.ctx.drawImage(this.img1, this.x3 + this.game.canvas.width, this.y, this.game.canvas.width, this.game.canvas.height);
+    this.game.ctx.drawImage(this.img3, this.x3 + this.game.canvas.width, this.y, this.game.canvas.width, this.game.canvas.height);
 
 };
 Background.prototype._layer04 = function() {
@@ -82,7 +82,7 @@ Background.prototype._layer04 = function() {
     this.game.ctx.drawImage(this.img4, this.x4, this.y, this.game.canvas.width, this.game.canvas.height);
 
     //Segundo bg
-    this.game.ctx.drawImage(this.img1, this.x4 + this.game.canvas.width, this.y, this.game.canvas.width, this.game.canvas.height);
+    this.game.ctx.drawImage(this.img4, this.x4 + this.game.canvas.width, this.y, this.game.canvas.width, this.game.canvas.height);
 
 };
 Background.prototype._layer05 = function() {
@@ -90,12 +90,12 @@ Background.prototype._layer05 = function() {
     this.game.ctx.drawImage(this.img5, this.x5, this.y, this.game.canvas.width, this.game.canvas.height);
 
     //Segundo bg
-    this.game.ctx.drawImage(this.img1, this.x5 + this.game.canvas.width, this.y, this.game.canvas.width, this.game.canvas.height);
+    this.game.ctx.drawImage(this.img5, this.x5 + this.game.canvas.width, this.y, this.game.canvas.width, this.game.canvas.height);
 
 };
 Background.prototype._layer06 = function() {
 
-    this.game.ctx.drawImage(this.img1, this.x6, this.y, this.game.canvas.width, this.game.canvas.height);
+    this.game.ctx.drawImage(this.img6, this.x6, this.y, this.game.canvas.width, this.game.canvas.height);
 
     //Segundo bg
     this.game.ctx.drawImage(this.img6, this.x6 + this.game.canvas.width, this.y, this.game.canvas.width, this.game.canvas.height);
@@ -106,12 +106,12 @@ Background.prototype._layer07 = function() {
     this.game.ctx.drawImage(this.img7, this.x7, this.y, this.game.canvas.width, this.game.canvas.height);
 
     //Segundo bg
-    this.game.ctx.drawImage(this.img1, this.x7 + this.game.canvas.width, this.y, this.game.canvas.width, this.game.canvas.height);
+    this.game.ctx.drawImage(this.img7, this.x7 + this.game.canvas.width, this.y, this.game.canvas.width, this.game.canvas.height);
 
 };
 Background.prototype._layer08 = function() {
 
-    this.game.ctx.drawImage(this.img1, this.x8, this.y, this.game.canvas.width, this.game.canvas.height);
+    this.game.ctx.drawImage(this.img8, this.x8, this.y, this.game.canvas.width, this.game.canvas.height);
 
     //Segundo bg
     this.game.ctx.drawImage(this.img8, this.x8 + this.game.canvas.width, this.y, this.game.canvas.width, this.game.canvas.height);
