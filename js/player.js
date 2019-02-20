@@ -14,9 +14,9 @@ function Player(game) {
 
     this.bullets = [];
 
-    // SPRITES número de imágenes diferentes
-    // this.img.frames = 3;
-    // this.img.frameIndex = 0;
+    //SPRITES número de imágenes diferentes
+    this.img.frames = 3;
+    this.img.frameIndex = 0;
 
     //this.setListeners();
 
@@ -25,33 +25,23 @@ function Player(game) {
 Player.prototype.draw = function() {
     // this.game.ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
 
-    this.game.ctx.fillStyle = "black";
-    this.game.ctx.fillRect(this.x, this.y, this.w, this.h);
+    // this.game.ctx.fillStyle = "black";
+    // this.game.ctx.fillRect(this.x, this.y, this.w, this.h);
 
-    // SPRITES
-    // this.game.ctx.drawImage(
-    //     this.img,
-    //     this.img.frameIndex * Math.floor(this.img.width / this.img.frames),
-    //     0,
-    //     Math.floor(this.img.width / this.img.frames),
-    //     this.img.height,
-    //     this.x,
-    //     this.y,
-    //     this.w,
-    //     this.h
-    // );
 
-    //Eliminamos bullets fuera del canvas, no funciona
-    // this.bullets.filter(function(bullet) {
-    //     return bullet.x > this.game.canvas.w;
-
-    // }.bind(this));
 
     // Pintamos bullets y las movemos
     this.bullets.forEach(function(bullet) {
         bullet.draw();
         bullet.move();
     });
+
+    // SPRITES
+
+    //Eliminamos bullets fuera del canvas, no funciona
+    this.bullets.filter(function(bullet) {
+        return bullet.x > this.game.canvas.w;
+    }.bind(this));
 
     this.game.ctx.drawImage(
         this.img,
@@ -64,6 +54,8 @@ Player.prototype.draw = function() {
         this.w,
         this.h
     );
+
+    this.animateImg();
 
 
 };
@@ -140,4 +132,13 @@ Player.prototype.shoot = function() {
     this.bullets.push(bullet);
 
     console.log(this.bullets)
+};
+Player.prototype.animateImg = function() {
+    // se va cambiando el frame. Cuanto mayor es el módulo, mas lento se mueve el personaje
+    if (this.game.framesCounter % 6 === 0) {
+        this.img.frameIndex += 1;
+
+        // Si el frame es el último, se vuelve al primero
+        if (this.img.frameIndex > 2) this.img.frameIndex = 0;
+    }
 };

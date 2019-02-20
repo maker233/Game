@@ -7,6 +7,7 @@ function Game() {
 
     this.fps = 60
     this.score = 0
+    this.ammo = 0
     this.interval = undefined
     this.player = undefined
 
@@ -34,7 +35,7 @@ Game.prototype.refresh = function() {
         this.clean();
         this.framesCounter++;
 
-        if (this.framesCounter > 1000) {
+        if (this.framesCounter > 5000) {
             this.framesCounter = 0;
         }
 
@@ -42,7 +43,10 @@ Game.prototype.refresh = function() {
         if (this.framesCounter < 500 && this.framesCounter % 200 === 0) {
             this.generateZombie()
         } else if (
-            this.framesCounter > 500 && this.framesCounter % 70 === 0) {
+            this.framesCounter > 500 && this.framesCounter % 65 === 0) {
+            this.generateZombie()
+        } else if (
+            this.framesCounter > 2000 && this.framesCounter % 15 === 0) {
             this.generateZombie()
         }
 
@@ -56,6 +60,7 @@ Game.prototype.refresh = function() {
         this.checkAllCollisions()
 
         this.score += 0.05;
+        this.ammo += 0.001;
 
     }.bind(this), 1000 / this.fps)
 }
@@ -82,7 +87,7 @@ Game.prototype.checkAllCollisions = function() {
         this.deleteZombie()
     }
 
-    if (this.isCollisionAll(this.zombies, this.bullets) === true) {
+    if (this.isCollisionAll(this.zombies, this.player.bullets) === true) {
         //animación explotan
         console.log("Zombie disparado")
         this.deleteZombie()
@@ -107,6 +112,9 @@ Game.prototype.drawAll = function() {
 Game.prototype.drawScore = function() {
     this.scoreBoard.draw(this.ctx)
     this.scoreBoard.update(this.score, this.ctx)
+
+    this.scoreBoard.drawAmmo(this.ctx)
+    this.scoreBoard.updateAmmo(this.ammo, this.ctx)
 }
 
 Game.prototype.moveAll = function() {
@@ -128,13 +136,14 @@ Game.prototype.clean = function() {
 Game.prototype.reset = function() {
     this.background = new Background(this);
     this.player = new Player(this);
-    //this.bullets = new Bullets(this)
+    this.bullets = new Bullet(this)
 
     this.scoreBoard = ScoreBoard;
     this.scoreBoard.init();
 
     this.framesCounter = 0
     this.score = 0
+    this.ammo = 3
 
     this.zombies = []
     this.obstacles = []
