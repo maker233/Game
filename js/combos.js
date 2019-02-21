@@ -17,7 +17,13 @@ Combos.prototype.draw = function() {
 }
 
 Combos.prototype._combo10 = function() {
-    ctx.font = "19px sans-serif";
+    ctx.font = "50px sans-serif";
     ctx.fillStyle = "red";
     ctx.fillText(this.message10, 128, 165);
+
+    this.rewards()
 };
+
+Combos.prototype.rewards = function() {
+    this.score += 500
+}

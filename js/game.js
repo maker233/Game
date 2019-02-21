@@ -7,9 +7,26 @@ function Game() {
 
     this.fps = 60
     this.score = 0
-    this.ammo = 0
     this.interval = undefined
     this.player = undefined
+
+    this.deadEnemies = [];
+
+    /*
+    this.audioZombie = new Audio();
+    this.audioZombie.src = "tal.mp3"
+
+    this.music = new Audio();
+    this.music.src = "..."
+
+    1. CREAR EL AUDIO
+    this.audio = new Audio();
+    this.audio.src = "tal.mp3"
+    2. REPRODUCIR (CUANDO QUIERAS)
+    this.audio.play();
+    3. PARAR
+    this.audio.pause();
+    */
 
 }
 
@@ -22,6 +39,8 @@ Game.prototype.init = function(id) {
         this.canvas.height = this.h;
 
         this.refresh();
+
+        //this.music.play();
 
     }
     // REFRESH
@@ -49,7 +68,7 @@ Game.prototype.refresh = function() {
             this.framesCounter > 1000 && this.framesCounter % 15 === 0) {
             this.generateZombie()
         } else if (
-            this.framesCounter > 2000 && this.framesCounter % 5 === 0) {
+            this.framesCounter > 3500 && this.framesCounter % 15 === 0) {
             this.generateZombie()
         }
 
@@ -63,13 +82,13 @@ Game.prototype.refresh = function() {
         this.checkAllCollisions()
 
         this.score += 0.05;
-        this.ammo += 0.001;
+        this.player.currAmmo += 0.005;
 
     }.bind(this), 1000 / this.fps)
 }
 
 
-
+//COLISIONES
 
 Game.prototype.checkAllCollisions = function() {
     if (this.isCollisionPvO()) {
@@ -82,13 +101,15 @@ Game.prototype.checkAllCollisions = function() {
         //alert("Te han comido")
         console.log("Te han comido")
         this.gameOver()
+
+        // this.audioZombie.play();
     }
 
+    var collisionZvsO = this.isCollisionAll(this.zombies, this.obstacles);
 
-    if (this.isCollisionAll(this.zombies, this.obstacles) === true) {
-        //animación te comen
+    if (collisionZvsO) {
+        this.deleteZombie(collisionZvsO[0])
         console.log("Zombie chocado")
-        this.deleteZombie()
     }
 
     var collisionBvsZ = this.isCollisionAll(this.zombies, this.player.bullets);
@@ -104,19 +125,37 @@ Game.prototype.checkAllCollisions = function() {
 
     if (collisionBvsO) { this.player.deleteBullet(collisionBvsZ[0]) }
 
-
 }
+
 Game.prototype.drawAll = function() {
+    this.deadEnemies = this.deadEnemies.filter(function(enemy) {
+        console.log(enemy.deadAnimation.frameIndex)
+        return enemy.deadAnimation.frameIndex < 11;
+    })
+
+    var objects = [this.player];
+    objects = objects.concat(this.obstacles, this.zombies, this.deadEnemies);
+
+    objects = objects.sort(function(object1, object2) {
+        object1.y - object2.y
+    })
+
+    //console.log(objects);
+
 
     this.background.draw()
-    this.player.draw()
+        //this.player.draw()
     this.drawScore()
 
-    this.obstacles.forEach(function(elm) {
-        elm.draw()
-    })
-    this.zombies.forEach(function(elm) {
-        elm.draw()
+    // this.obstacles.forEach(function(elm) {
+    //     elm.draw()
+    // })
+    // this.zombies.forEach(function(elm) {
+    //     elm.draw()
+    // })
+
+    objects.forEach(function(object) {
+        object.draw()
     })
 
 }
@@ -155,7 +194,7 @@ Game.prototype.reset = function() {
 
     this.framesCounter = 0
     this.score = 0
-    this.ammo = 3
+    this.player.currAmmo = 5
 
     this.zombies = []
     this.obstacles = []
@@ -166,6 +205,7 @@ Game.prototype.reset = function() {
 Game.prototype.gameOver = function() {
     console.log("GAME OVER, Try again")
     this.reset();
+    // this.music.pause();
 }
 
 
@@ -181,7 +221,8 @@ Game.prototype.generateZombie = function() {
 }
 
 Game.prototype.deleteZombie = function(index) {
-    this.zombies.splice(index, 1);
+    this.deadEnemies.push(this.zombies.splice(index, 1)[0]);
+    this.deadEnemies[this.deadEnemies.length - 1].dead = true;
 
 }
 
@@ -223,10 +264,10 @@ Game.prototype.isCollisionAll = function(fo, so) {
 //REFACTORIZACIÓN DE COLISIONES
 
 Game.prototype._collision = function(p, o) {
-    return ((p.x + p.w) > o.x &&
-        (o.x + o.w) > p.x &&
-        (p.y + p.h) > o.y &&
-        (o.y + o.h) > p.y)
+    return ((p.x + (p.w / 2)) > o.x &&
+        (o.x + (o.w / 2)) > p.x &&
+        ((p.y + (p.h / 2)) + (p.h / 2)) > (o.y + (o.h / 2)) &&
+        ((o.y + (o.h / 2)) + (o.h / 2)) > (p.y + (p.h / 2)))
 }
 
 Game.prototype.indexCollision = function() {

@@ -5,6 +5,32 @@ body {
     color: greenyellow
 }
 
+#gui-start {
+    position: absolute;
+    background-color: black;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+}
+
+#btn-start {
+    position: absolute;
+    background-color: orange;
+    color: white;
+    top: 50%;
+    left: 50%;
+    padding: 10px 10px;
+    border-radius: 3px;
+}
+
+#gui-video {
+    display: float;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url("paper.gif");
+}
+
 #particles-js {
     position: absolute;
     width: 100%;

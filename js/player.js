@@ -1,8 +1,8 @@
 function Player(game) {
     this.game = game;
 
-    this.w = 40
-    this.h = 40
+    this.w = 80
+    this.h = 100
 
     this.x = this.game.w / 2 - this.w / 2
     this.y = this.game.h * 0.75 - this.h / 2
@@ -10,36 +10,31 @@ function Player(game) {
     this.health = 5 // daño de obtaculos débiles
 
     this.img = new Image();
-    this.img.src = 'images/player.png';
+    this.img.src = 'images/player/wizrun.png'
 
     this.bullets = [];
+    this.currAmmo = 3
 
     //SPRITES número de imágenes diferentes
-    this.img.frames = 3;
+    this.img.frames = 5;
     this.img.frameIndex = 0;
 
+
+    this.bulletsText = false;
+    this.bulletsFramesCounter = 0;
     //this.setListeners();
 
 }
 
 Player.prototype.draw = function() {
-    // this.game.ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
-
-    // this.game.ctx.fillStyle = "black";
-    // this.game.ctx.fillRect(this.x, this.y, this.w, this.h);
-
-
-
     // Pintamos bullets y las movemos
     this.bullets.forEach(function(bullet) {
         bullet.draw();
         bullet.move();
     });
-
     // SPRITES
-
-    //Eliminamos bullets fuera del canvas, no funciona
     this.bullets = this.bullets.filter(function(bullet) {
+        //Eliminamos bullets fuera del canvas
         return bullet.x > 0;
     }.bind(this));
 
@@ -54,10 +49,19 @@ Player.prototype.draw = function() {
         this.w,
         this.h
     );
-
     this.animateImg();
 
+    if (this.bulletsText) {
+        this.game.ctx.font = "50px sans-serif";
+        this.game.ctx.fillStyle = "red";
+        this.game.ctx.fillText("NO QUEDAN BALAS", 300, 92);
+        this.bulletsFramesCounter++;
 
+        if (this.bulletsFramesCounter === 50) {
+            this.bulletsFramesCounter = 0;
+            this.bulletsText = false;
+        }
+    }
 };
 
 Player.prototype.move = function() {
@@ -129,7 +133,13 @@ Player.prototype._moveLeft = function() {
 Player.prototype.shoot = function() {
     var bullet = new Bullet(this.game, this.x + this.w, this.y + this.h / 2);
 
-    this.bullets.push(bullet);
+    if (this.currAmmo > 1) {
+        this.bullets.push(bullet)
+        this.currAmmo--
+    } else {
+        this.bulletsText = true;
+
+    }
 
     console.log(this.bullets)
 };
@@ -139,7 +149,7 @@ Player.prototype.animateImg = function() {
         this.img.frameIndex += 1;
 
         // Si el frame es el último, se vuelve al primero
-        if (this.img.frameIndex > 2) this.img.frameIndex = 0;
+        if (this.img.frameIndex > 4) this.img.frameIndex = 0;
     }
 };
 

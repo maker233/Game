@@ -10,14 +10,24 @@ function Background(game) {
     this.img7 = new Image();
     this.img8 = new Image();
 
-    this.img1.src = 'images/parallax/layer_01.png';
-    this.img2.src = 'images/parallax/layer_02.png';
-    this.img3.src = 'images/parallax/layer_03.png';
-    this.img4.src = 'images/parallax/layer_04.png';
-    this.img5.src = 'images/parallax/layer_05.png';
-    this.img6.src = 'images/parallax/layer_06.png';
-    this.img7.src = 'images/parallax/layer_07.png';
-    this.img8.src = 'images/parallax/layer_08.png';
+    // primer background
+    // this.img1.src = 'images/parallax/layer_01.png';
+    // this.img2.src = 'images/parallax/layer_02.png';
+    // this.img3.src = 'images/parallax/layer_03.png';
+    // this.img4.src = 'images/parallax/layer_04.png';
+    // this.img5.src = 'images/parallax/layer_05.png';
+    // this.img6.src = 'images/parallax/layer_06.png';
+    // this.img7.src = 'images/parallax/layer_07.png';
+    // this.img8.src = 'images/parallax/layer_08.png';
+
+    this.img1.src = 'images/flatbg/game_background_3/layers/ground_3.png';
+    this.img2.src = 'images/flatbg/game_background_3/layers/clouds_2.png';
+    this.img3.src = 'images/flatbg/game_background_3/layers/clouds_1.png';
+    this.img4.src = 'images/flatbg/game_background_3/layers/ground_2.png';
+    this.img5.src = 'images/flatbg/game_background_3/layers/ground_1.png';
+    this.img6.src = 'images/flatbg/game_background_3/layers/plant.png';
+    this.img7.src = 'images/flatbg/game_background_3/layers/rocks.png';
+    this.img8.src = 'images/flatbg/game_background_3/layers/sky.png';
 
     this.y = 0;
 
@@ -58,7 +68,7 @@ Background.prototype._layer01 = function() {
     this.game.ctx.drawImage(this.img1, this.x1, this.y, this.game.canvas.width, this.game.canvas.height);
 
     //Segundo bg
-    this.game.ctx.drawImage(this.img1, this.x1 + this.game.canvas.width, this.y, this.game.canvas.width, this.game.canvas.height);
+    this.game.ctx.drawImage(this.img1, this.x1 + this.game.canvas.width, this.y - 2, this.game.canvas.width, this.game.canvas.height);
 
 };
 Background.prototype._layer02 = function() {
