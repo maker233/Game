@@ -97,18 +97,18 @@ Player.prototype.move = function() {
 
 Player.prototype._moveUp = function() {
     //Bloqueo movimiento superior
-    if (this.y < 490) {
+    if (this.y < 430) {
         this.y = this.y
     } else {
-        this.y -= 15
+        this.y -= 12
     }
 
 }
 
 Player.prototype._moveDown = function() {
     //Bloqueo movimiento inferior
-    if (this.y < 650) {
-        this.y += 15
+    if (this.y < 7000) {
+        this.y += 12
     } else {
         this.y = this.y
     }

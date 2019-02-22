@@ -25,27 +25,39 @@ function Zombie(game) {
     this.x = 10
     this.y = 400 + Math.random() * 200;
     //this.w = Math.random() * 100 + 50
-    this.w = 100;
+    this.w = 115;
     // this.w = this.enemy.w
-    this.h = 100;
+    this.h = 85;
 
-    this.images = ['images/player/trolrun2.png', 'images/player/gobrun.png']
+    this.images = ['images/player/trolsrun12.png', 'images/player/gobrun.png']
+
+    this.sprites = [{
+            normal: 'images/player/trolsrun12.png',
+            dead: 'images/player/troldiying.png'
+        },
+        {
+            normal: 'images/player/gobrun.png',
+            dead: 'images/player/goblindie.png'
+        }
+    ]
+
+    this.sprite = this.sprites[Math.floor(Math.random() * this.sprites.length)]
 
     this.img = new Image();
     this.img2 = new Image();
     this.img2.src = 'images/sprites/zombieboy.png';
-    this.img.src = this.images[Math.floor(Math.random() * this.images.length)];
+    this.img.src = this.sprite.normal;
     //this.img.src = this.enemy.src
 
     // img2 sprite muerte zombie
 
     // número de imágenes diferentes
     this.img.frames = 12;
-    this.img2.frames = 7;
+    this.img2.frames = 12;
     this.img.frameIndex = 0;
 
     this.deadAnimation = new Image();
-    this.deadAnimation.src = 'images/player/goblindie.png';
+    this.deadAnimation.src = this.sprite.dead;
     //this.deadAnimation2.src = 'images/player/goblindie.png';
     this.deadAnimation.frames = 12;
     this.deadAnimation.frameIndex = 0;

@@ -19,20 +19,31 @@
     <script type="text/javascript" src="js/zombies.js"></script>
     <script type="text/javascript" src="js/score.js"></script>
     <script type="text/javascript" src="js/game.js"></script>
-    <title>RunGandalf</title>
+    <title>The Last Run</title>
 </head>
 
 <body>
+    <iframe src="./audio/battleready.wav" allow="autoplay" style="display:none" id="iframeAudio"></iframe>
     <div id="gui-start">
+        <img src="images/logoname.png" alt="The Last Run">
+
         <button type="button" id="btn-start">Start</button>
+        <!-- <button type="button" id="btn-howto">How to Play</button> -->
         <button type="button" id="btn-zombiewar">ZombieWar</button>
-        <button type="button" id="btn-magician">How to Play</button>
     </div>
     <div id="gui-canvas">
         <canvas id="batman"></canvas>
     </div>
-    <div class="gameover"></div>
-    <div class="instrucciones"></div>
+    <div id="gui-canvas">
+        <canvas id="zombiewar"></canvas>
+    </div>
+    <div class="gameover">
+        <button type="button" id="btn-reset">¡The Empire needs YOU!</button>
+    </div>
+    <!-- <div class="gui-canvas">
+        <button type="button" id="btn-closehowto">x</button>
+        <h3 style="text-align: center;">Oh no! Los goblins preparan una nueva invasión, ayuda al mago Khelden a llegar a la atalaya para avisar de sus planes antes de que amanezca. Date prisa, SON MILLONES!</h3>
+    </div> -->
 
     <!-- <div id="particles-js"></div> -->
 

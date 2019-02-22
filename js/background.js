@@ -9,6 +9,7 @@ function Background(game) {
     this.img6 = new Image();
     this.img7 = new Image();
     this.img8 = new Image();
+    this.img9 = new Image();
 
     // primer background
     // this.img1.src = 'images/parallax/layer_01.png';
@@ -28,6 +29,7 @@ function Background(game) {
     this.img6.src = 'images/flatbg/game_background_3/layers/plant.png';
     this.img7.src = 'images/flatbg/game_background_3/layers/rocks.png';
     this.img8.src = 'images/flatbg/game_background_3/layers/sky.png';
+    this.img9.src = 'images/flatbg/1.png';
 
     this.y = 0;
 
@@ -39,6 +41,7 @@ function Background(game) {
     this.x6 = 0;
     this.x7 = 0;
     this.x8 = 0;
+    this.x9 = 0;
 }
 
 Background.prototype.draw = function() {
@@ -50,6 +53,7 @@ Background.prototype.draw = function() {
     this._layer03()
     this._layer02()
     this._layer01()
+    this._layer09()
 }
 
 Background.prototype.move = function() {
@@ -61,6 +65,7 @@ Background.prototype.move = function() {
     this._move06()
     this._move07()
     this._move08()
+    this._move09()
 }
 
 Background.prototype._layer01 = function() {
@@ -127,16 +132,24 @@ Background.prototype._layer08 = function() {
     this.game.ctx.drawImage(this.img8, this.x8 + this.game.canvas.width, this.y, this.game.canvas.width, this.game.canvas.height);
 
 };
+Background.prototype._layer09 = function() {
+
+    this.game.ctx.drawImage(this.img9, this.x9, this.y, this.game.canvas.width, this.game.canvas.height);
+
+    //Segundo bg
+    this.game.ctx.drawImage(this.img9, this.x9 + this.game.canvas.width, this.y, this.game.canvas.width, this.game.canvas.height);
+
+};
 //  MOVE ---------------------------------
 //  MOVE ---------------------------------
 
 Background.prototype._move01 = function() {
-    this.x1 -= 2.3;
+    this.x1 -= 2;
 
     if (this.x1 < -this.game.canvas.width) this.x1 = 0;
 };
 Background.prototype._move02 = function() {
-    this.x2 -= 2;
+    this.x2 -= 1.7;
 
     if (this.x2 < -this.game.canvas.width) this.x2 = 0;
 };
@@ -156,7 +169,7 @@ Background.prototype._move05 = function() {
     if (this.x5 < -this.game.canvas.width) this.x5 = 0;
 };
 Background.prototype._move06 = function() {
-    this.x6 -= 0.6;
+    this.x6 -= 0.5;
 
     if (this.x6 < -this.game.canvas.width) this.x6 = 0;
 };
@@ -166,7 +179,12 @@ Background.prototype._move07 = function() {
     if (this.x7 < -this.game.canvas.width) this.x7 = 0;
 };
 Background.prototype._move08 = function() {
-    this.x8 -= 0.1;
+    this.x8 -= 0.2;
 
     if (this.x8 < -this.game.canvas.width) this.x8 = 0;
+};
+Background.prototype._move09 = function() {
+    this.x9 -= 2.3;
+
+    if (this.x9 < -this.game.canvas.width) this.x9 = 0;
 };

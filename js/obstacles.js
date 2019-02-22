@@ -2,7 +2,7 @@ function Obstacle(game) {
     this.game = game;
 
     this.x = 1000
-    this.y = 400 + Math.random() * 200;
+    this.y = 500 + Math.random() * 300;
     //this.w = Math.random() * 100 + 50
     this.w = 80;
     this.h = 90;

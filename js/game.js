@@ -2,8 +2,8 @@ function Game() {
     this.ctx = undefined
     this.canvas = undefined
 
-    this.w = window.innerWidth - 10
-    this.h = window.innerHeight - 10
+    this.w = window.innerWidth
+    this.h = window.innerHeight
 
     this.fps = 60
     this.score = 0
@@ -13,11 +13,13 @@ function Game() {
     this.deadEnemies = [];
 
 
+    this.music0 = new Audio();
     this.music = new Audio();
     this.music2 = new Audio();
     //this.audiozombie.music = new Audio();
 
     //this.audiozombie.src = "audio/Run30.mp3"
+    this.music0.src = "audio/battleready.wav"
     this.music.src = "audio/Run30.MOV"
     this.music2.src = "audio/gameover.wav"
         /*
@@ -40,14 +42,18 @@ Game.prototype.init = function(id) {
         this.canvas.width = this.w;
         this.canvas.height = this.h;
 
+        this.music0.play();
+
         this.refresh();
 
-        this.music.play();
+
 
     }
     // REFRESH
     // REFRESH
 Game.prototype.refresh = function() {
+    this.music0.pause();
+    this.music.play();
 
     this.reset();
 
@@ -64,7 +70,7 @@ Game.prototype.refresh = function() {
         if (this.framesCounter < 500 && this.framesCounter % 200 === 0) {
             this.generateZombie()
         } else if (
-            this.framesCounter > 500 && this.framesCounter % 100 === 0) {
+            this.framesCounter > 500 && this.framesCounter % 150 === 0) {
             this.generateZombie()
         } else if (
             this.framesCounter > 2000 && this.framesCounter % 80 === 0) {
@@ -74,7 +80,7 @@ Game.prototype.refresh = function() {
             this.generateZombie()
         }
 
-        if (this.framesCounter % 300 === 0) {
+        if (this.framesCounter % 250 === 0) {
             this.generateObstacle()
         }
 
@@ -84,7 +90,7 @@ Game.prototype.refresh = function() {
         this.checkAllCollisions()
 
         this.score += 0.05;
-        this.player.currAmmo += 0.005;
+        this.player.currAmmo += 0.002;
 
     }.bind(this), 1000 / this.fps)
 }
@@ -208,9 +214,13 @@ Game.prototype.reset = function() {
 }
 
 Game.prototype.gameOver = function() {
+    clearInterval(this.interval)
 
-    this.reset()
     console.log("GAME OVER, Try again")
+
+    document.querySelector('.gameover').style.display = "flex"
+
+
     this.music.pause();
     this.music2.play();
 }

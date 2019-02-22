@@ -7,8 +7,8 @@ var ScoreBoard = {
     },
     update: function(score, ctx) {
         ctx.font = "30px sans-serif";
-        ctx.fillStyle = "blue";
-        ctx.fillText(Math.floor(score), 88, 108);
+        ctx.fillStyle = "#130f40";
+        ctx.fillText(Math.floor(score), 86, 107);
     },
     draw: function(ctx) {
         ctx.drawImage(this.img, 45, 40, 115, 130);
