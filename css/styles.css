@@ -5,6 +5,13 @@ body {
     color: greenyellow
 }
 
+button {
+    position: absolute;
+    color: white;
+    padding: 20px 50px;
+    border-radius: 3px;
+}
+
 #gui-start {
     position: absolute;
     background-color: black;
@@ -14,13 +21,21 @@ body {
 }
 
 #btn-start {
-    position: absolute;
     background-color: orange;
-    color: white;
+    top: 30%;
+    left: 50%;
+}
+
+#btn-magician {
+    background-color: orange;
     top: 50%;
     left: 50%;
-    padding: 10px 10px;
-    border-radius: 3px;
+}
+
+#btn-zombiewar {
+    background-color: orange;
+    top: 70%;
+    left: 50%;
 }
 
 #gui-video {
@@ -29,6 +44,14 @@ body {
     width: 100%;
     height: 100%;
     background-image: url("paper.gif");
+}
+
+#gameover {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url("images/gameover.png");
+    background-size: cover;
 }
 
 #particles-js {

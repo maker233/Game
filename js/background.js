@@ -65,10 +65,10 @@ Background.prototype.move = function() {
 
 Background.prototype._layer01 = function() {
 
-    this.game.ctx.drawImage(this.img1, this.x1, this.y, this.game.canvas.width, this.game.canvas.height);
+    this.game.ctx.drawImage(this.img1, this.x1, this.y - 20, this.game.canvas.width, this.game.canvas.height);
 
     //Segundo bg
-    this.game.ctx.drawImage(this.img1, this.x1 + this.game.canvas.width, this.y - 2, this.game.canvas.width, this.game.canvas.height);
+    this.game.ctx.drawImage(this.img1, this.x1 + this.game.canvas.width, this.y - 22, this.game.canvas.width, this.game.canvas.height);
 
 };
 Background.prototype._layer02 = function() {

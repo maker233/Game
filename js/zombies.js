@@ -25,11 +25,11 @@ function Zombie(game) {
     this.x = 10
     this.y = 400 + Math.random() * 200;
     //this.w = Math.random() * 100 + 50
-    this.w = 90;
+    this.w = 100;
     // this.w = this.enemy.w
-    this.h = 90;
+    this.h = 100;
 
-    this.images = ['images/player/trolrun.png', 'images/sprites/gobrun.png']
+    this.images = ['images/player/trolrun2.png', 'images/player/gobrun.png']
 
     this.img = new Image();
     this.img2 = new Image();
@@ -41,10 +41,12 @@ function Zombie(game) {
 
     // número de imágenes diferentes
     this.img.frames = 12;
+    this.img2.frames = 7;
     this.img.frameIndex = 0;
 
     this.deadAnimation = new Image();
-    this.deadAnimation.src = 'images/18.png';
+    this.deadAnimation.src = 'images/player/goblindie.png';
+    //this.deadAnimation2.src = 'images/player/goblindie.png';
     this.deadAnimation.frames = 12;
     this.deadAnimation.frameIndex = 0;
     this.dead = false;
@@ -103,17 +105,17 @@ Zombie.prototype.animateImg = function(img) {
 };
 
 
-Zombie.prototype.killAnimation = function() {
-    this.game.ctx.drawImage(
-        this.img2,
-        this.img.frameIndex * Math.floor(this.img.width / this.img.frames),
-        0,
-        Math.floor(this.img.width / this.img.frames),
-        this.img.height,
-        this.x,
-        this.y,
-        this.w,
-        this.h
-    );
+// Zombie.prototype.killAnimation = function() {
+//     this.game.ctx.drawImage(
+//         this.img2,
+//         this.img.frameIndex * Math.floor(this.img.width / this.img.frames),
+//         0,
+//         Math.floor(this.img.width / this.img.frames),
+//         this.img.height,
+//         this.x,
+//         this.y,
+//         this.w,
+//         this.h
+//     );
 
-}
+// }

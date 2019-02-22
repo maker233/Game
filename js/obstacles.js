@@ -8,8 +8,11 @@ function Obstacle(game) {
     this.h = 90;
 
     this.img = new Image();
-    this.img.src = 'images/rock01.png';
-    this.img.src = 'images/rock02.png';
+    // this.img.src = 'images/rock01.png';
+    // this.img.src = 'images/rock02.png';
+
+    this.images = ['images/rock01.png', 'images/rock02.png']
+    this.img.src = this.images[Math.floor(Math.random() * this.images.length)];
 
     this.img.frames = 3;
     this.img.frameIndex = 0;

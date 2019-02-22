@@ -1,8 +1,8 @@
 function Player(game) {
     this.game = game;
 
-    this.w = 80
-    this.h = 100
+    this.w = 85
+    this.h = 110
 
     this.x = this.game.w / 2 - this.w / 2
     this.y = this.game.h * 0.75 - this.h / 2
@@ -23,6 +23,9 @@ function Player(game) {
     this.bulletsText = false;
     this.bulletsFramesCounter = 0;
     //this.setListeners();
+
+    this.audio = new Audio();
+    this.audio.src = "audio/fireball.wav"
 
 }
 
@@ -52,9 +55,9 @@ Player.prototype.draw = function() {
     this.animateImg();
 
     if (this.bulletsText) {
-        this.game.ctx.font = "50px sans-serif";
-        this.game.ctx.fillStyle = "red";
-        this.game.ctx.fillText("NO QUEDAN BALAS", 300, 92);
+        this.game.ctx.font = "50px 'Fredericka the Great', cursive"
+        this.game.ctx.fillStyle = "redorange"
+        this.game.ctx.fillText("NO TIENES PODER", 300, 120);
         this.bulletsFramesCounter++;
 
         if (this.bulletsFramesCounter === 50) {
@@ -77,6 +80,7 @@ Player.prototype.move = function() {
                 break;
             case 32: //space
                 //console.log("Has pulsado space")
+                this.audio.play();
                 this.shoot()
                 break;
             case 37:
@@ -145,7 +149,7 @@ Player.prototype.shoot = function() {
 };
 Player.prototype.animateImg = function() {
     // se va cambiando el frame. Cuanto mayor es el módulo, mas lento se mueve el personaje
-    if (this.game.framesCounter % 6 === 0) {
+    if (this.game.framesCounter % 5 === 0) {
         this.img.frameIndex += 1;
 
         // Si el frame es el último, se vuelve al primero

@@ -12,21 +12,23 @@ function Game() {
 
     this.deadEnemies = [];
 
-    /*
-    this.audioZombie = new Audio();
-    this.audioZombie.src = "tal.mp3"
 
     this.music = new Audio();
-    this.music.src = "..."
+    this.music2 = new Audio();
+    //this.audiozombie.music = new Audio();
 
-    1. CREAR EL AUDIO
-    this.audio = new Audio();
-    this.audio.src = "tal.mp3"
-    2. REPRODUCIR (CUANDO QUIERAS)
-    this.audio.play();
-    3. PARAR
-    this.audio.pause();
-    */
+    //this.audiozombie.src = "audio/Run30.mp3"
+    this.music.src = "audio/Run30.MOV"
+    this.music2.src = "audio/gameover.wav"
+        /*
+        1. CREAR EL AUDIO
+        this.audio = new Audio();
+        this.audio.src = "tal.mp3"
+        2. REPRODUCIR (CUANDO QUIERAS)
+        this.audio.play();
+        3. PARAR
+        this.audio.pause();
+        */
 
 }
 
@@ -40,7 +42,7 @@ Game.prototype.init = function(id) {
 
         this.refresh();
 
-        //this.music.play();
+        this.music.play();
 
     }
     // REFRESH
@@ -54,7 +56,7 @@ Game.prototype.refresh = function() {
         this.clean();
         this.framesCounter++;
 
-        if (this.framesCounter > 5000) {
+        if (this.framesCounter > 10000) {
             this.framesCounter = 0;
         }
 
@@ -62,13 +64,13 @@ Game.prototype.refresh = function() {
         if (this.framesCounter < 500 && this.framesCounter % 200 === 0) {
             this.generateZombie()
         } else if (
-            this.framesCounter > 500 && this.framesCounter % 65 === 0) {
+            this.framesCounter > 500 && this.framesCounter % 100 === 0) {
             this.generateZombie()
         } else if (
-            this.framesCounter > 1000 && this.framesCounter % 15 === 0) {
+            this.framesCounter > 2000 && this.framesCounter % 80 === 0) {
             this.generateZombie()
         } else if (
-            this.framesCounter > 3500 && this.framesCounter % 15 === 0) {
+            this.framesCounter > 6000 && this.framesCounter % 15 === 0) {
             this.generateZombie()
         }
 
@@ -102,7 +104,7 @@ Game.prototype.checkAllCollisions = function() {
         console.log("Te han comido")
         this.gameOver()
 
-        // this.audioZombie.play();
+        this.audioZombie.play();
     }
 
     var collisionZvsO = this.isCollisionAll(this.zombies, this.obstacles);
@@ -133,6 +135,7 @@ Game.prototype.drawAll = function() {
         return enemy.deadAnimation.frameIndex < 11;
     })
 
+    //Ordenacion de profundidad
     var objects = [this.player];
     objects = objects.concat(this.obstacles, this.zombies, this.deadEnemies);
 
@@ -181,8 +184,11 @@ Game.prototype.moveAll = function() {
 }
 
 Game.prototype.clean = function() {
-    this.ctx.clearRect(0, 0, this.w, this.h);
-}
+        this.ctx.clearRect(0, 0, this.w, this.h);
+    }
+    // Game.prototype.pause() = function() {
+
+// }
 
 Game.prototype.reset = function() {
     this.background = new Background(this);
@@ -199,15 +205,15 @@ Game.prototype.reset = function() {
     this.zombies = []
     this.obstacles = []
     this.bullets = []
-
 }
 
 Game.prototype.gameOver = function() {
-    console.log("GAME OVER, Try again")
-    this.reset();
-    // this.music.pause();
-}
 
+    this.reset()
+    console.log("GAME OVER, Try again")
+    this.music.pause();
+    this.music2.play();
+}
 
 // GENERADORES DE ELEMENTOS
 
@@ -229,8 +235,7 @@ Game.prototype.deleteZombie = function(index) {
 
 // COLISIONES - HERE'RE BE DRAGONS
 // COLISIONES - HERE'RE BE DRAGONS
-// COLISIONES - HERE'RE BE DRAGONS
-// COLISIONES - HERE'RE BE DRAGONS
+
 
 Game.prototype.isCollisionPvO = function() {
     //Player vs Obstacles
@@ -279,7 +284,6 @@ Game.prototype.indexCollision = function() {
     }
     if (contadorColisiones > 0) {} //llamar sonido!
 }
-
 
 
 

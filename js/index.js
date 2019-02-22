@@ -8,10 +8,9 @@ window.onload = function() {
 
         start.style.display = "none"
             //setAttribute(display, none)
+        game = new Game();
+        game.init("batman");
     }
-
-    game = new Game();
-    game.init("batman");
 
     // particlesJS.load('particles-js', 'config/particles.json', function() {
     //     console.log('callback - particles.js config loaded');
