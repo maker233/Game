@@ -21,32 +21,70 @@ window.onload = function() {
         start.style.display = "none"
             //setAttribute(display, none)
         game = new Game();
-        game.init("warmode");
+        game.init("zombiewar");
     }
 
     document.querySelector('#btn-reset').onclick = function() {
+        // Reset épico completo
+        game.isPaused = false;
+        clearInterval(game.interval); // Por si acaso
         game.reset();
         game.refresh();
         game.music2.pause();
-        document.querySelector('.gameover').style.display = 'none'
+        document.querySelector('.gameover').style.display = 'none';
+        
+        // Limpiar canvas completamente
+        game.clean();
     }
 
-    document.querySelector('#btn-howto').onclick = function() {
-
-        document.querySelector('.gameover').style.display = 'none'
-        document.querySelector('#gui-start').style.display = 'none';
-        document.querySelector('.instrucciones').style.display = 'block'
+    // How to play buttons - commented out in HTML
+    var howtoBtn = document.querySelector('#btn-howto');
+    if (howtoBtn) {
+        howtoBtn.onclick = function() {
+            document.querySelector('.gameover').style.display = 'none'
+            document.querySelector('#gui-start').style.display = 'none';
+            document.querySelector('.instrucciones').style.display = 'block'
+        }
     }
-    document.querySelector('#btn-closehowto').onclick = function() {
-
-        document.querySelector('.gameover').style.display = 'none'
-        document.querySelector('#gui-start').style.display = 'flex';
-        document.querySelector('.instrucciones').style.display = 'none'
+    
+    var closeHowtoBtn = document.querySelector('#btn-closehowto');
+    if (closeHowtoBtn) {
+        closeHowtoBtn.onclick = function() {
+            document.querySelector('.gameover').style.display = 'none'
+            document.querySelector('#gui-start').style.display = 'flex';
+            document.querySelector('.instrucciones').style.display = 'none'
+        }
     }
 
-    // particlesJS.load('particles-js', 'config/particles.json', function() {
-    //     console.log('callback - particles.js config loaded');
-    // });
+    // ✨ Particles épicas en el fondo!
+    particlesJS('particles-js', {
+        "particles": {
+            "number": { "value": 80 },
+            "color": { "value": "#ffffff" },
+            "shape": { "type": "circle" },
+            "opacity": {
+                "value": 0.2,
+                "anim": { "enable": true, "speed": 1 }
+            },
+            "size": {
+                "value": 1,
+                "random": true
+            },
+            "move": {
+                "enable": true,
+                "speed": 0.5,
+                "direction": "none",
+                "random": true
+            }
+        },
+        "interactivity": {
+            "detect_on": "canvas",
+            "events": {
+                "onhover": { "enable": true, "mode": "repulse" },
+                "onclick": { "enable": true, "mode": "push" }
+            }
+        }
+    });
 
 
 };

@@ -12,17 +12,7 @@ body {
     overflow: hidden;
 }
 
-button {
-    position: absolute;
-    color: white;
-    padding: 15px 50px;
-    border-radius: 50px;
-    border-color: #F0932B;
-    background-color: #130f40;
-    transition: .2s all ease-in-out;
-    cursor: pointer !important;
-    font-size: 1.3rem;
-}
+/* Borrada - regla duplicada movida abajo */
 
 button:hover {
     background-color: #CA700C !important;
@@ -41,6 +31,8 @@ button:hover {
     justify-content: center;
     font-size: 1.2rem;
     cursor: pointer;
+    /* ✨ FadeIn épico al cargar */
+    animation: fadeIn 2s ease-in-out;
 }
 
 #gui-start button {
@@ -94,4 +86,74 @@ instrucciones {
     display: none;
     background-image: url("../images/gameover.png");
     background-size: cover;
+}
+
+/* ✨ ANIMACIONES ÉPICAS */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(1.1);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes buttonPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* ✨ Mejorar botones */
+button {
+    position: absolute;
+    color: white;
+    padding: 15px 50px;
+    border-radius: 50px;
+    border-color: #F0932B;
+    background-color: #130f40;
+    transition: .3s all ease-in-out;
+    cursor: pointer !important;
+    font-size: 1.3rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    animation: buttonPulse 3s infinite ease-in-out;
+}
+
+button:hover {
+    background-color: #CA700C !important;
+    transform: scale(1.05) !important;
+    animation: none;
+}
+
+/* Particles en el fondo del menú */
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* 📱 RESPONSIVE BÁSICO */
+@media screen and (max-width: 1200px) {
+    #gui-start button {
+        width: 12rem;
+        font-size: 1.1rem;
+        padding: 12px 30px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #gui-start button {
+        width: 10rem;
+        font-size: 1rem;
+        padding: 10px 25px;
+        margin: 0.5rem 0;
+    }
+    
+    #gui-start {
+        font-size: 1rem;
+    }
 }

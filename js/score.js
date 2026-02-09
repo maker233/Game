@@ -16,9 +16,13 @@ var ScoreBoard = {
     updateAmmo: function(ammo, ctx) {
         ctx.font = "35px sans-serif";
         ctx.fillStyle = "orange";
-        ctx.fillText(Math.floor(game.player.currAmmo), 1300, 92);
+        // Posición responsive: canvas width - offset
+        var textX = game.canvas.width - 100;
+        ctx.fillText(Math.floor(game.player.currAmmo), textX, 92);
     },
     drawAmmo: function(ctx) { //imagen balas
-        ctx.drawImage(this.img2, 1200, 55, 70, 50);
+        // Posición responsive: canvas width - offset
+        var imgX = game.canvas.width - 200;
+        ctx.drawImage(this.img2, imgX, 55, 70, 50);
     }
 }
