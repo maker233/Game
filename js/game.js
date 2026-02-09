@@ -16,12 +16,12 @@ function Game() {
     this.music0 = new Audio();
     this.music = new Audio();
     this.music2 = new Audio();
-    //this.audiozombie.music = new Audio();
+    this.audioZombie = new Audio();
 
-    //this.audiozombie.src = "audio/Run30.mp3"
     this.music0.src = "audio/battleready.wav"
-    this.music.src = "audio/Run30.MOV"
+    this.music.src = "audio/Run30.mp3"
     this.music2.src = "audio/gameover.wav"
+    this.audioZombie.src = "audio/Fireball.wav" // sonido cuando zombie te come
         /*
         1. CREAR EL AUDIO
         this.audio = new Audio();
@@ -42,7 +42,15 @@ Game.prototype.init = function(id) {
         this.canvas.width = this.w;
         this.canvas.height = this.h;
 
-        this.music0.play();
+        // Audio moderno con promesa para navegadores 2026
+        const playAudio = async () => {
+            try {
+                await this.music0.play();
+            } catch (error) {
+                console.log('Audio autoplay bloqueado - se reproducirá al interactuar:', error);
+            }
+        };
+        playAudio();
 
         this.refresh();
 
@@ -53,7 +61,15 @@ Game.prototype.init = function(id) {
     // REFRESH
 Game.prototype.refresh = function() {
     this.music0.pause();
-    this.music.play();
+    // Audio moderno con promesa
+    const playMusic = async () => {
+        try {
+            await this.music.play();
+        } catch (error) {
+            console.log('Audio play bloqueado:', error);
+        }
+    };
+    playMusic();
 
     this.reset();
 
@@ -110,7 +126,15 @@ Game.prototype.checkAllCollisions = function() {
         console.log("Te han comido")
         this.gameOver()
 
-        this.audioZombie.play();
+        // Audio moderno con promesa
+        const playZombieSound = async () => {
+            try {
+                await this.audioZombie.play();
+            } catch (error) {
+                console.log('Audio zombie bloqueado:', error);
+            }
+        };
+        playZombieSound();
     }
 
     var collisionZvsO = this.isCollisionAll(this.zombies, this.obstacles);
@@ -131,7 +155,7 @@ Game.prototype.checkAllCollisions = function() {
 
     var collisionBvsO = this.isCollisionAll(this.player.bullets, this.obstacles)
 
-    if (collisionBvsO) { this.player.deleteBullet(collisionBvsZ[0]) }
+    if (collisionBvsO) { this.player.deleteBullet(collisionBvsO[1]) }
 
 }
 
@@ -220,9 +244,16 @@ Game.prototype.gameOver = function() {
 
     document.querySelector('.gameover').style.display = "flex"
 
-
     this.music.pause();
-    this.music2.play();
+    // Audio moderno con promesa
+    const playGameOver = async () => {
+        try {
+            await this.music2.play();
+        } catch (error) {
+            console.log('Audio gameOver bloqueado:', error);
+        }
+    };
+    playGameOver();
 }
 
 // GENERADORES DE ELEMENTOS
